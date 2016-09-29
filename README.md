@@ -1,8 +1,8 @@
-dataferret/fluentd-loggly
+datacoda/fluentd-loggly
 =========================
-![Latest tag](https://img.shields.io/github/tag/dataferret/docker-fluentd-loggly.svg?style=flat)
+![Latest tag](https://img.shields.io/github/tag/datacoda/docker-fluentd-loggly.svg?style=flat)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
-[![](https://badge.imagelayers.io/dataferret/fluentd-loggly:latest.svg)](https://imagelayers.io/?images=dataferret/fluentd-loggly:latest 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/datacoda/fluentd-loggly:latest.svg)](https://imagelayers.io/?images=datacoda/fluentd-loggly:latest 'Get your own badge on imagelayers.io')
 
 Fluentd logging endpoint transcription to Loggly service.  In addition to
 the standard fields _container_id_ and _container_name_, it adds the following
@@ -23,7 +23,7 @@ Step N: Start loggly
             -e TOKEN:ABCD-1234-ABCD-1234 \
             -e HOST:`hostname` \
             -e LOGGLY_TAG:docker,container \
-            dataferret/fluentd-loggly
+            datacoda/fluentd-loggly
 
 * _TOKEN_ [required] is the Loggly API token.
 * _HOST_ [required] is required during creation for _node_hostname_ to be populated.
