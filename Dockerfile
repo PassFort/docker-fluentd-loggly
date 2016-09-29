@@ -1,5 +1,5 @@
 FROM fluent/fluentd:latest
-MAINTAINER Ted Chen <tedlchen@gmail.com>
+MAINTAINER Li-Te Chen <datacoda@gmail.com>
 
 ENV TOKEN=""
 ENV NODE_HOSTNAME=""
