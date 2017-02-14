@@ -63,7 +63,7 @@ if $BUILD ; then
     printer "Build completed"
 fi
 
-if $DEPLY ; then
+if $DEPLOY ; then
     printer "Deploying Release *$CONTAINER_TAG* to cluster *$CLUSTER* ($CLUSTER_NAME)."
     deploy_container
     printer "Deploy completed"

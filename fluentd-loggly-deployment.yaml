@@ -11,8 +11,7 @@ spec:
     spec:
       containers:
       - name: passfort-loggly 
-        #image: eu.gcr.io/$PROJECT_ID/passfort-loggly:$CONTAINER_TAG
-        image: passfort-loggly
+        image: eu.gcr.io/$PROJECT_ID/passfort-loggly:$CONTAINER_TAG
         imagePullPolicy: Never
         env:
         - name: TOKEN
