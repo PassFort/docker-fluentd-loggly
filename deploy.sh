@@ -36,9 +36,9 @@ build_container ()
 
 deploy_container()
 {
-    printer "Deploying $1 $CONTAINER_TAG"
+    printer "Deploying $CONTAINER_TAG"
 
-    envsubst < $1-deployment.yaml | kubectl replace --record -f - || envsubst < $1-deployment.yaml | kubectl create --record -f -
+    envsubst < fluentd-loggly-deployment.yaml | kubectl replace --record -f - || envsubst < fluentd-loggly-deployment.yaml | kubectl create --record -f -
 }
 
 case $CLUSTER in
