@@ -7,6 +7,20 @@ export TREE_HASH=${TREE_HASH:5:7}
 export CONTAINER_TAG=$TREE_HASH
 export CLUSTER=${1:-staging}
 
+BUILD=false
+DEPLOY=false
+
+while test $# -gt 0
+do
+    case "$1" in
+        --build) BUILD=true
+            ;;
+        --deploy) DEPLOY=true
+            ;;
+    esac
+    shift
+done
+
 printer ()
 {
     echo -e "\033[0;33m$1\033[0m"
@@ -43,6 +57,14 @@ esac
 gcloud config set container/cluster $CLUSTER_NAME
 gcloud container clusters get-credentials $CLUSTER_NAME
 
-printer "Deploying commit $CONTAINER_TAG to $CLUSTER ($CLUSTER_NAME)"
-build_container
-deploy_container
+if $BUILD ; then
+    printer "Building Release *$CONTAINER_TAG*"
+    build_container
+    printer "Build completed"
+fi
+
+if $DEPLY ; then
+    printer "Deploying Release *$CONTAINER_TAG* to cluster *$CLUSTER* ($CLUSTER_NAME)."
+    deploy_container
+    printer "Deploy completed"
+fi
