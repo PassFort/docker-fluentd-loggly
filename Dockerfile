@@ -3,7 +3,7 @@ MAINTAINER Li-Te Chen <datacoda@gmail.com>
 
 ENV TOKEN=""
 ENV NODE_HOSTNAME=""
-ENV LOGGLY_TAG="docker,container"
+ENV LOGGLY_TAG=""
 
 RUN gem install fluent-plugin-loggly
 
