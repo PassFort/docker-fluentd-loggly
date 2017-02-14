@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: loggly
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        passfort: loggly
+    spec:
+      containers:
+      - name: passfort-loggly 
+        #image: eu.gcr.io/$PROJECT_ID/passfort-loggly:$CONTAINER_TAG
+        image: passfort-loggly
+        imagePullPolicy: Never
+        env:
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: logglytoken
+              key: token
+        - name: NODE_HOSTNAME
+          value: 'passfort'
+        - name: LOGGLY_TAG
+          value: docker,container
+        ports:
+        - containerPort: 24224
