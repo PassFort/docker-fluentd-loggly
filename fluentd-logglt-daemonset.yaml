@@ -37,4 +37,4 @@ spec:
           path: /var/log/
       - name: varlibdockercontainers
         hostPath:
-          path: /var/lib/docker/
+          path: /var/lib/docker/containers

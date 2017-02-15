@@ -10,6 +10,6 @@ RUN gem install fluent-plugin-loggly
 USER root
 COPY fluent.conf /fluentd/etc/fluent.conf
 
-USER fluent
+#USER fluent
 # Run Fluentd
 CMD exec fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins
