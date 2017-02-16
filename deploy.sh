@@ -38,7 +38,7 @@ deploy_container()
 {
     printer "Deploying $CONTAINER_TAG"
 
-    envsubst < fluentd-loggly-daemonset.yaml | kubectl replace --record -f - || envsubst < fluentd-loggly-daemonset.yaml | kubectl create --record -f -
+    envsubst < fluentd-loggly-daemonset.yaml | kubectl replace --record -f - && kubectl delete pods -l app=fluentd || envsubst < fluentd-loggly-daemonset.yaml | kubectl create --record -f -
 }
 
 case $CLUSTER in
