@@ -30,6 +30,8 @@ spec:
           mountPath: /var/log/
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
+          readOnly: true
+          terminationGracePeriodSeconds: 30
       terminationGracePeriodSeconds: 30
       volumes:
       - name: varlog
