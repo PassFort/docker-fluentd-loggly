@@ -1,4 +1,5 @@
-FROM fluent/fluentd:latest
+# FROM fluent/fluentd:latest
+FROM fluent/fluentd:edge
 
 ENV TOKEN=""
 ENV NODE_HOSTNAME=""
