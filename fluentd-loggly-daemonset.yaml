@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: fluentd
-        image: eu.gcr.io/$PROJECT_ID/passfort-loggly:$CONTAINER_TAG
+        image: {container_uri}
         #image: passfort-loggly
         #imagePullPolicy: Never
         env:
