@@ -24,7 +24,7 @@ def build_container(container, container_tag):
 def deploy_daemonset(cluster, container, container_tag):
     container_uri = get_container_uri(container, container_tag)
     deploy_file(
-        "fluentd-loggly-daemonset-{}.yaml".format(cluster),
+        "fluentd-loggly-daemonset-{}.yaml",
         container_uri,
         container_uri=container_uri,
     )
@@ -45,7 +45,7 @@ def main(cluster, build, deploy, tag):
         # Calculate the tree hash to use as the container name
         container_tag = git_tree_hash()
         # Sanity check
-        validate_deploy(cluster, container_tag, required_secrets)
+        # validate_deploy(cluster, container_tag, required_secrets)
 
     if build:
         build_container(container, container_tag)
