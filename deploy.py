@@ -24,7 +24,7 @@ def build_container(container, container_tag):
 def deploy_daemonset(cluster, container, container_tag):
     container_uri = get_container_uri(container, container_tag)
     deploy_file(
-        "fluentd-loggly-daemonset-{}.yaml",
+        "fluentd-loggly-daemonset-{}.yaml".format(cluster),
         container_uri,
         container_uri=container_uri,
     )
