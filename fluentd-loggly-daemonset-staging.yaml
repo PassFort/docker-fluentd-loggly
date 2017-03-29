@@ -20,9 +20,9 @@ spec:
               name: logglytoken
               key: token
         - name: NODE_HOSTNAME
-          value: 'passfort'
+          value: 'staging'
         - name: LOGGLY_TAG
-          value: docker,container
+          value: staging
         ports:
         - containerPort: 24224
         volumeMounts:
