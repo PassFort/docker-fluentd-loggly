@@ -5,7 +5,6 @@ ENV NODE_HOSTNAME=""
 ENV LOGGLY_TAG=""
 
 RUN gem install fluent-plugin-loggly
-RUN gem install fluent-plugin-logdna
 
 # Force back into root from fluentd's ubuntu
 USER root
