@@ -1,12 +1,13 @@
-FROM fluent/fluentd:latest
+FROM fluent/fluentd:v0.12.32
 
 ENV TOKEN=""
 ENV NODE_HOSTNAME=""
 ENV LOGGLY_TAG=""
 
-RUN gem install fluent-plugin-loggly
+RUN gem install net-http-persistent -v 2.9.4
 
-# Force back into root from fluentd's ubuntu
+COPY plugins/ /fluentd/plugins
+
 USER root
 COPY fluent.conf /fluentd/etc/fluent.conf
 
