@@ -53,15 +53,9 @@ class LogglyOutput < Fluent::Output
   def emit(tag, es, chain)
     chain.next
     es.each {|time,record|
-      $log.debug "<record>"
-      $log.debug record
-      $log.debug "</record>"
       record_json = Yajl::Encoder.encode(record)
       new_tag = /passfort\.var\.log\.containers\.([a-z-]*)-\d+/.match(tag)
       uri = make_uri(new_tag[1])
-      $log.debug "<record_json>"
-      $log.debug record_json
-      $log.debug "</record_json>"
       post = Net::HTTP::Post.new uri.path
       post.body = record_json
       begin
