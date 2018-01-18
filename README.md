@@ -1,42 +1,15 @@
-datacoda/fluentd-loggly
-=========================
-![Latest tag](https://img.shields.io/github/tag/datacoda/docker-fluentd-loggly.svg?style=flat)
-![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
-[![](https://badge.imagelayers.io/datacoda/fluentd-loggly:latest.svg)](https://imagelayers.io/?images=datacoda/fluentd-loggly:latest 'Get your own badge on imagelayers.io')
+### Fluentd Loggly K8s
 
-Fluentd logging endpoint transcription to Loggly service.  In addition to
-the standard fields _container_id_ and _container_name_, it adds the following
-fields to the Loggly json record.
+This repo contains the necessary setup to redirect logs from all pods to [Loggly](https://passfort.loggly.com). This setup adds a DaemonSet to kubernetes which sits on each machine, and tails the log files of each container. `fluentd` then parses and redirects the logs to loggly over `http`.
 
-* _node_hostname_ : docker node of this logger.
-* _fluentd_tag_ : fluentd-tag environment variable of client container.
+There is some complexity to this setup, that took some trial and error to get working:
 
+### Loggly Tags
+Loggly provides a way for segmenting logs based on tags. The way to add a tag is either by sending a header, or when posting via `http` appending `/tag/nginx` to the end of the URL. The `fluentd` `in_tail` plugin sets the log's "tag" as the filename, which isn't useful for our infrastructure. Therefore the loggly plugin in `./plugins/out_loggly.rb` is tailored to our own specific needs, and parses the filename with a regex to set the tag. This is pretty nasty, but doesn't seem to be possible with fluentd setup only.
 
-Requires Docker Engine 1.8+
-
-
-Step N: Start loggly
---------------------
-
-        docker run -d --name loggly \
-            -p 24224:24224 \
-            -e TOKEN:ABCD-1234-ABCD-1234 \
-            -e HOST:`hostname` \
-            -e LOGGLY_TAG:docker,container \
-            datacoda/fluentd-loggly
-
-* _TOKEN_ [required] is the Loggly API token.
-* _HOST_ [required] is required during creation for _node_hostname_ to be populated.
-* _LOGGLY_TAG_ [optional] by default is 'docker,container' and messages in Loggly will show
-up with both tags.
-
-
-    Note: By default, the fluentd log-driver in Docker will assume port 24224. Secure this port.
-
-
-Step N: Confirm
----------------
-
-Test the loggly container.
-
-        docker run --rm --log-driver=fluentd ubuntu echo "Hello Fluentd!"
+### Jsonish Parsing
+We have started to use structured logging in some of our services. When you log from a service it produces lines like:
+```
+{"log":"[2018-01-18 08:38:36 +0000] [29] [DEBUG] POST /4.0/profiles/3d2c1cc8-fae4-11e7-93eb-0a580a040321/checks\n","stream":"stderr","time":"2018-01-18T08:38:36.549639081Z"}
+```
+The `in_tail` `fluentd` plugin contains a JSON formatter which will parse the above line fine. But when we have a structured log, it only parses the top level, and not the stringified object that lives in `log`. Therefore the plugin in `./plugins/parser_jsonish.rb` will try and parse the `log`, but if it cannot will just send the parsed version of the logline above. If it can parse the inner `log`, then it will merge the parsed object with the above logline, while deleting the stringified key and value.
